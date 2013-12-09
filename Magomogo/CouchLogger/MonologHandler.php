@@ -52,7 +52,7 @@ class MonologHandler extends AbstractProcessingHandler
                         array_merge(
                             $record,
                             array(
-                                'message' => reset($record),
+                                'message' => reset($record) ?: 'Error',
                                 'channel' => $this->channel,
                             )
                         )

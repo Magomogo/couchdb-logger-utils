@@ -48,8 +48,8 @@ class SilexExceptionLoggerProvider implements ServiceProviderInterface
                     'method' => 'POST',
                     'content' => json_encode(
                         array(
-                            'message' => $ex->getMessage(),
-                            'channel' => $channel ,
+                            'message' => $ex->getMessage() ?: get_class($ex),
+                            'channel' => $channel,
                             'trace' => $ex->getTraceAsString()
                         )
                     )
