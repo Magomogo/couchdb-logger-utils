@@ -9,7 +9,8 @@
         }
     ],
     "require-dev": {
-        "silex/silex": "*",
+        "php": ">=8.2",
+        "silex/silex": "^2.0",
         "monolog/monolog": "*"
     },
     "autoload": {

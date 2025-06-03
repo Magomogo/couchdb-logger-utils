@@ -2,24 +2,22 @@
 
 namespace Magomogo\CouchLogger;
 
+use Pimple\Container;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Pimple\ServiceProviderInterface;
 
 class SilexExceptionLoggerProvider implements ServiceProviderInterface
 {
-    /**
-     * @param Application $app An Application instance
-     */
-    public function register(Application $app)
+    public function register(Container $pimple): void
     {
-        $app['couchLogger.uri'] = 'http://127.0.0.1:5984/logger-application/_design/main/_rewrite/new';
-        $app['couchLogger.channel'] = 'default';
+        $pimple['couchLogger.uri'] = 'http://127.0.0.1:5984/logger-application/_design/main/_rewrite/new';
+        $pimple['couchLogger.channel'] = 'default';
     }
 
     /**
      * @param Application $app An Application instance
      */
-    public function boot(Application $app)
+    public function boot(Application $app): void
     {
         $app->error(
             function (\Exception $ex, $code) use ($app)

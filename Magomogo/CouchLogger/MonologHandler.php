@@ -3,38 +3,33 @@
 namespace Magomogo\CouchLogger;
 
 use Monolog\Handler\AbstractProcessingHandler;
-use Monolog\Logger;
+use Monolog\LogRecord;
 
 class MonologHandler extends AbstractProcessingHandler
 {
-    /**
-     * @var string
-     */
-    private $channel;
-
-    /**
-     * @var string
-     */
-    private $serviceUri;
+    private string $channel;
+    private string $serviceUri;
 
     public function __construct(
         $channel = 'default',
         $uri = 'http://127.0.0.1:5984/logger-application/_design/main/_rewrite/new',
-        $level = Logger::WARNING,
+        $level = \Monolog\Level::Warning,
         $bubble = true
     ) {
+        $this->channel = $channel;
+        $this->serviceUri = $uri;
         parent::__construct($level, $bubble);
     }
 
     /**
      * Writes the record down to the log of the implementing handler
      *
-     * @param  array $record
+     * @param LogRecord $record
      * @return void
      */
-    protected function write(array $record)
+    protected function write(LogRecord $record): void
     {
-        file_get_contents($this->serviceUri, null, $this->postStream($record));
+        file_get_contents($this->serviceUri, null, $this->postStream($record->toArray()));
     }
 
     /**
